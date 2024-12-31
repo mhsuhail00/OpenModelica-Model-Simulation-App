@@ -1,0 +1,27 @@
+C:/Users/mhsuh/AppData/Local/Temp/OpenModelica/OMEdit/NonInteractingTanks.TwoConnectedTanks/TwoConnectedTanks.exe -port=64724 -logFormat=xmltcp -override=startTime=0,stopTime=1,stepSize=0.002,tolerance=1e-06,solver=dassl,outputFormat=mat,variableFilter=.* -r=C:/Users/mhsuh/AppData/Local/Temp/OpenModelica/OMEdit/NonInteractingTanks.TwoConnectedTanks/TwoConnectedTanks_res.mat -clock=CPU -w -lv=LOG_STDOUT,LOG_ASSERT,LOG_STATS -inputPath=C:/Users/mhsuh/AppData/Local/Temp/OpenModelica/OMEdit/NonInteractingTanks.TwoConnectedTanks -outputPath=C:/Users/mhsuh/AppData/Local/Temp/OpenModelica/OMEdit/NonInteractingTanks.TwoConnectedTanks
+Chosen clock-type: CPU not available for the current platform. Defaulting to real-time.
+The initialization finished successfully without homotopy method.
+### STATISTICS ###
+timer
+   0.0013993s          reading init.xml
+   0.0019362s          reading info.xml
+   0.0008328s [  3.1%] pre-initialization
+   0.0001533s [  0.6%] initialization
+    5.75e-05s [  0.2%] steps
+   0.0008088s [  3.0%] solver (excl. callbacks)
+   0.0012273s [  4.6%] creating output-file
+   0.0003001s [  1.1%] event-handling
+   0.0003965s [  1.5%] overhead
+   0.0227679s [ 85.8%] simulation
+   0.0265442s [100.0%] total
+events
+    0 state events
+    0 time events
+solver: dassl
+   22 steps taken
+   22 calls of functionODE
+   21 evaluations of jacobian
+    0 error test failures
+    0 convergence test failures
+1.46e-05s time of jacobian evaluation
+The simulation finished successfully.

@@ -21,7 +21,7 @@
 {"eqIndex":6,"tag":"alias","equation":[8],"section":"initial"},
 {"eqIndex":7,"section":"regular","tag":"assign","defines":["tank2.Q1"],"uses":["tank1.h","time"],"equation":["if time <= 5.0 then 0.0 else sqrt(tank1.h)"],"source":{"info":{"file":"","lineStart":0,"lineEnd":0,"colStart":0,"colEnd":0}}},
 {"eqIndex":8,"section":"regular","tag":"assign","defines":["der(tank1.h)"],"uses":["tank1.A","tank2.Q1","tank1.Qin"],"equation":["(tank1.Qin - tank2.Q1) / tank1.A"],"source":{"info":{"file":"C:/Users/mhsuh/Downloads/NonInteractingTanks-20241220T094917Z-001/NonInteractingTanks/Tank.mo","lineStart":10,"lineEnd":10,"colStart":1,"colEnd":22}}},
-{"eqIndex":9,"section":"regular","tag":"assign","defines":["tank2.T"],"uses":["tank2.Q1","tank2.V"],"equation":["tank2.V / (1e-6 + tank2.Q1)"],"source":{"info":{"file":"C:/Users/mhsuh/Downloads/NonInteractingTanks-20241220T094917Z-001/NonInteractingTanks/Tank2.mo","lineStart":11,"lineEnd":11,"colStart":1,"colEnd":16}}},
+{"eqIndex":9,"section":"regular","tag":"assign","defines":["tank2.T"],"uses":["tank2.Q1","tank2.V"],"equation":["tank2.V / (1e-6 + tank2.Q1)"],"source":{"info":{"file":"C:/Users/mhsuh/Downloads/NonInteractingTanks-20241220T094917Z-001/NonInteractingTanks/Tank2.mo","lineStart":11,"lineEnd":11,"colStart":1,"colEnd":18}}},
 {"eqIndex":10,"section":"regular","tag":"assign","defines":["der(tank2.h)"],"uses":["tank2.A","tank2.Q1"],"equation":["tank2.Q1 / tank2.A"],"source":{"info":{"file":"C:/Users/mhsuh/Downloads/NonInteractingTanks-20241220T094917Z-001/NonInteractingTanks/Tank2.mo","lineStart":10,"lineEnd":10,"colStart":1,"colEnd":16}}}
 ],
 "functions":[

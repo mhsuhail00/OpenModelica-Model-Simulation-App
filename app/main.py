@@ -1,17 +1,27 @@
 import os.path
 import subprocess
 import sys
-
-from PyQt6.QtCore import Qt, QEvent, QTimer, QThread, pyqtSignal, QObject
+import time
+import pandas as pd
+import matplotlib.pyplot as plt
+from PyQt6.QtCore import Qt, QEvent, QTimer, QThread, pyqtSignal
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QGridLayout, QLineEdit, QLabel, QWidget, QPushButton,
-    QFileDialog, QDialog, QVBoxLayout)
+                             QFileDialog, QDialog, QVBoxLayout, QScrollArea)
 from PyQt6.QtGui import QIcon, QIntValidator, QPixmap
 
 
 class SimulationApp(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.plot_window = None
+        self.stop_time_input = None
+        self.start_time_input = None
+        self.browse_label = None
+        self.plot_button = None
+        self.grid_layout = None
         self.loading = None
+        self.executable_file_path = None
+
         self.setWindowTitle("Simulate Model")
         self.setWindowIcon(QIcon("./resources/logo.png"))
         min_width, min_height = 500, 400
@@ -25,13 +35,18 @@ class SimulationApp(QMainWindow):
         )
         self.showMaximized()
         self.setStyleSheet("background-color: #1a1a1a;")
+        self.setup_ui()
 
-        self.executable_file_path = None
-
+    def setup_ui(self):
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
-        grid_layout = QGridLayout(central_widget)
-        grid_layout.setSpacing(10)
+        self.grid_layout = QGridLayout(central_widget)
+        self.grid_layout.setSpacing(10)
+
+        self.plot_button = CustomButton("PLOT SIMULATION", "./resources/default_plot_icon.png", "./resources/hover_plot_icon.png")
+        self.plot_button.setFixedWidth(300)
+        self.plot_button.clicked.connect(self.plot_model)
+        self.plot_button.setFocusPolicy(Qt.FocusPolicy.TabFocus)
 
         browse_button = CustomButton("BROWSE", "./resources/default_open_icon.png", "./resources/hover_open_icon.png")
         browse_button.setFixedWidth(150)
@@ -49,30 +64,34 @@ class SimulationApp(QMainWindow):
                 }
             """
         )
-        grid_layout.addWidget(browse_button, 0, 0, alignment=Qt.AlignmentFlag.AlignRight)
-        grid_layout.addWidget(self.browse_label, 0, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        self.grid_layout.addWidget(browse_button, 1, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        self.grid_layout.addWidget(self.browse_label, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
 
         start_time_label = CustomLabel("START TIME")
         self.start_time_input = CustomInputBox()
         self.start_time_input.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-        grid_layout.addWidget(start_time_label, 1, 0, alignment=Qt.AlignmentFlag.AlignRight)
-        grid_layout.addWidget(self.start_time_input, 1, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        self.grid_layout.addWidget(start_time_label, 2, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        self.grid_layout.addWidget(self.start_time_input, 2, 1, alignment=Qt.AlignmentFlag.AlignLeft)
         self.start_time_input.setFocus()
 
         stop_time_label = CustomLabel("STOP TIME")
         self.stop_time_input = CustomInputBox()
-        grid_layout.addWidget(stop_time_label, 2, 0, alignment=Qt.AlignmentFlag.AlignRight)
-        grid_layout.addWidget(self.stop_time_input, 2, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+        self.grid_layout.addWidget(stop_time_label, 3, 0, alignment=Qt.AlignmentFlag.AlignRight)
+        self.grid_layout.addWidget(self.stop_time_input, 3, 1, alignment=Qt.AlignmentFlag.AlignLeft)
 
         execute_button = CustomButton("EXECUTE MODEL", "./resources/default_exec_icon.png", "./resources/hover_exec_icon.png")
         execute_button.setFocusPolicy(Qt.FocusPolicy.TabFocus)
         execute_button.clicked.connect(self.execute_model)
         execute_button.setFixedWidth(300)
-        grid_layout.addWidget(execute_button, 3, 0, 1, 2, alignment=Qt.AlignmentFlag.AlignHCenter)
+        self.grid_layout.addWidget(execute_button, 4, 0, 1, 2, alignment=Qt.AlignmentFlag.AlignHCenter)
+
+    def show_plot_button(self):
+        self.grid_layout.addWidget(self.plot_button, 0, 0, 1, 2, alignment=Qt.AlignmentFlag.AlignHCenter)
+
     def browse_file(self):
         self.executable_file_path, _ = QFileDialog.getOpenFileName(self, "Open File", "", "Executable Simulation (*.exe)")
         if self.executable_file_path:
-            label = " .../" + self.executable_file_path.split("/")[-1]
+            label = " ... /" + self.executable_file_path.split("/")[-1]
             self.browse_label.setText(label)
 
     def execute_model(self):
@@ -109,13 +128,21 @@ class SimulationApp(QMainWindow):
         else:
             Popup("Warning", "Please select an executable created from the OpenModelica model", "warning")
 
-    def trigger_finished(self, result:object):
+    def trigger_finished(self, log:str, message:object):
         self.loading.close()
-        Popup("Success", result, "success")
+        if log == "LOG_SUCCESS":
+            self.show_plot_button()
+            Popup("SUCCESS", message + "\nOpen Plot to see the Simualtion Plots", "success")
+        else:
+            Popup("ERROR", message, "error")
+
+    def plot_model(self):
+        self.plot_window = PlotWindow(self.executable_file_path)
+        self.plot_window.show()
 
 
 class ExecuteThread(QThread):
-    finished = pyqtSignal(object)
+    finished = pyqtSignal(str, object)
     def __init__(self, file_path, start_time, stop_time, parent=None):
         super().__init__(parent)
         self.executable_file_path = file_path
@@ -123,9 +150,57 @@ class ExecuteThread(QThread):
         self.stop_time = stop_time
 
     def run(self):
-        command = [self.executable_file_path, f"-override=startTime={self.start_time},stopTime={self.stop_time}"]
+        command = [self.executable_file_path, f"-override=startTime={self.start_time},stopTime={self.stop_time},stepSize=0.002,outputFormat=csv"]
         execute = subprocess.run(command, cwd=os.path.dirname(self.executable_file_path), capture_output=True, text=True)
-        self.finished.emit(execute.stdout)
+        time.sleep(1)
+        log = execute.stdout.split(" ")[0]
+        self.finished.emit(log, execute.stdout.strip())
+
+class PlotWindow(QMainWindow):
+    def __init__(self, path:str):
+        super().__init__()
+        self.plotting_data = None
+        self.grid_layout = None
+        self.path = path
+        self.setup_ui()
+    def setup_ui(self):
+        self.showMaximized()
+        self.setWindowTitle("Simulation Plot")
+        self.setWindowIcon(QIcon("./resources/logo.png"))
+        self.setStyleSheet("background-color: #1a1a1a;")
+        scroll_area = QScrollArea(self)
+        scroll_area.setWidgetResizable(True)
+        central_widget = QWidget()
+        scroll_area.setWidget(central_widget)
+        self.setCentralWidget(scroll_area)
+        self.grid_layout = QGridLayout(central_widget)
+        self.grid_layout.setSpacing(10)
+
+        self.path = self.path[:-4] + "_res.csv"
+        self.plotting_data = pd.read_csv(self.path)
+
+        for var in range(1, len(self.plotting_data.columns)):
+            setattr(self, f'label_{var - 1}', CustomLabel(self.plotting_data.columns[var]))
+            self.grid_layout.addWidget(getattr(self, f'label_{var - 1}'), var - 1, 0, Qt.AlignmentFlag.AlignRight)
+
+            setattr(self, f'button_{var - 1}', CustomButton("SHOW", "./resources/default_show_icon.png", "./resources/hover_show_icon.png"))
+            button = getattr(self, f'button_{var - 1}')
+            button.setFixedHeight(30)
+            button.clicked.connect(self.show_plot)
+            button.setObjectName(f'{var}')
+            self.grid_layout.addWidget(getattr(self, f'button_{var - 1}'), var - 1, 1, Qt.AlignmentFlag.AlignLeft)
+    def show_plot(self):
+        var = self.sender()
+        x_label = self.plotting_data.columns[0]
+        y_label = self.plotting_data.columns[int(var.objectName())]
+        fig, pl = plt.subplots()
+        pl.plot(self.plotting_data[x_label], self.plotting_data[y_label], label = y_label)
+        pl.set_xlabel(x_label)
+        pl.set_ylabel(y_label)
+        pl.set_title(y_label + " vs " + x_label)
+        pl.legend()
+        fig.canvas.manager.set_window_title(f'Simulation Plot - {y_label}')
+        plt.show()
 
 class CustomInputBox(QLineEdit):
     def __init__(self, parent=None):
@@ -305,8 +380,6 @@ class Popup(QDialog):
             """
         )
         layout = QGridLayout(self)
-        layout.setSpacing(20)
-        layout.setContentsMargins(10, 10, 10, 10)
         message_label = QLabel(message)
         message_label.setStyleSheet(
             """
@@ -341,7 +414,6 @@ class Popup(QDialog):
         ok_button.setFixedHeight(30)
         ok_button.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         layout.addWidget(ok_button, 1, 0, 1, 2, alignment=Qt.AlignmentFlag.AlignRight)
-
         ok_button.clicked.connect(self.close)
         self.exec()
 

@@ -1,0 +1,178 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+
+<!-- description of the model interface using an extention of the FMI standard -->
+<fmiModelDescription
+  fmiVersion                          = "1.0"
+
+  modelName                           = "RLC1"
+  modelIdentifier                     = "RLC1"
+
+  OPENMODELICAHOME                    = "C:/Program Files/OpenModelica1.24.3-64bit"
+
+  guid                                = "{5ddc5745-7eb5-4fa0-bd39-c743fb024054}"
+
+  description                         = "A resistor-inductor-capacitor circuit model"
+  generationTool                      = "OpenModelica Compiler OpenModelica v1.24.3 (64-bit)"
+  generationDateAndTime               = "2025-01-01T19:33:57Z"
+
+  variableNamingConvention            = "structured"
+
+  numberOfEventIndicators             = "0"  cmt_numberOfEventIndicators             = "NG:       number of zero crossings,                           FMI"
+  numberOfTimeEvents                  = "0"  cmt_numberOfTimeEvents                  = "NG_SAM:   number of zero crossings that are samples,          OMC"
+
+  numberOfInputVariables              = "0"  cmt_numberOfInputVariables              = "NI:       number of inputvar on topmodel,                     OMC"
+  numberOfOutputVariables             = "0"  cmt_numberOfOutputVariables             = "NO:       number of outputvar on topmodel,                    OMC"
+
+  numberOfExternalObjects             = "0"  cmt_numberOfExternalObjects             = "NEXT:     number of external objects,                         OMC"
+  numberOfFunctions                   = "0"  cmt_numberOfFunctions                   = "NFUNC:    number of functions used by the simulation,         OMC"
+
+  numberOfContinuousStates            = "2"  cmt_numberOfContinuousStates            = "NX:       number of states,                                   FMI"
+  numberOfRealAlgebraicVariables      = "2"  cmt_numberOfRealAlgebraicVariables      = "NY:       number of real variables,                           OMC"
+  numberOfRealAlgebraicAliasVariables = "0"  cmt_numberOfRealAlgebraicAliasVariables = "NA:       number of alias variables,                          OMC"
+  numberOfRealParameters              = "4"  cmt_numberOfRealParameters              = "NP:       number of parameters,                               OMC"
+
+  numberOfIntegerAlgebraicVariables   = "0"  cmt_numberOfIntegerAlgebraicVariables   = "NYINT:    number of alg. int variables,                       OMC"
+  numberOfIntegerAliasVariables       = "0"  cmt_numberOfIntegerAliasVariables       = "NAINT:    number of alias int variables,                      OMC"
+  numberOfIntegerParameters           = "0"  cmt_numberOfIntegerParameters           = "NPINT:    number of int parameters,                           OMC"
+
+  numberOfStringAlgebraicVariables    = "0"  cmt_numberOfStringAlgebraicVariables    = "NYSTR:    number of alg. string variables,                    OMC"
+  numberOfStringAliasVariables        = "0"  cmt_numberOfStringAliasVariables        = "NASTR:    number of alias string variables,                   OMC"
+  numberOfStringParameters            = "0"  cmt_numberOfStringParameters            = "NPSTR:    number of string parameters,                        OMC"
+
+  numberOfBooleanAlgebraicVariables   = "0"  cmt_numberOfBooleanAlgebraicVariables   = "NYBOOL:   number of alg. bool variables,                      OMC"
+  numberOfBooleanAliasVariables       = "0"  cmt_numberOfBooleanAliasVariables       = "NABOOL:   number of alias bool variables,                     OMC"
+  numberOfBooleanParameters           = "0"  cmt_numberOfBooleanParameters           = "NPBOOL:   number of bool parameters,                          OMC" >
+
+
+  <!-- startTime, stopTime, tolerance are FMI specific, all others are OMC specific -->
+  <DefaultExperiment
+    startTime      = "0"
+    stopTime       = "1"
+    stepSize       = "0.002"
+    tolerance      = "1e-06"
+    solver        = "dassl"
+    outputFormat      = "mat"
+    variableFilter      = ".*" />
+
+  <!-- variables in the model -->
+  <ModelVariables>
+
+  <ScalarVariable
+    name = "V"
+    valueReference = "1000"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "Electrical" startLine = "11" startColumn = "3" endLine = "11" endColumn = "12" fileWritable = "true">
+    <Real fixed="true" useNominal="false" unit="V" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "i_L"
+    valueReference = "1001"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "1" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "Electrical" startLine = "12" startColumn = "3" endLine = "12" endColumn = "14" fileWritable = "true">
+    <Real fixed="true" useNominal="false" unit="A" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(V)"
+    valueReference = "1002"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "Electrical" startLine = "11" startColumn = "3" endLine = "11" endColumn = "12" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="km2.s-4.A-1.g" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(i_L)"
+    valueReference = "1003"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "Electrical" startLine = "12" startColumn = "3" endLine = "12" endColumn = "14" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="s-1.A" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "i_C"
+    valueReference = "1004"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "Electrical" startLine = "14" startColumn = "3" endLine = "14" endColumn = "14" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="A" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "i_R"
+    valueReference = "1005"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "Electrical" startLine = "13" startColumn = "3" endLine = "13" endColumn = "14" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="A" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "C"
+    valueReference = "1006"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "Electrical" startLine = "10" startColumn = "3" endLine = "10" endColumn = "33" fileWritable = "true">
+    <Real start="0.001" fixed="true" useNominal="false" unit="F" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "L"
+    valueReference = "1007"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "1" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "Electrical" startLine = "8" startColumn = "3" endLine = "8" endColumn = "29" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" unit="H" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "R"
+    valueReference = "1008"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "2" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "Electrical" startLine = "9" startColumn = "3" endLine = "9" endColumn = "31" fileWritable = "true">
+    <Real start="100.0" fixed="true" useNominal="false" unit="Ohm" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Vb"
+    valueReference = "1009"
+    description = "Battery voltage"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "3" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "Electrical" startLine = "7" startColumn = "3" endLine = "7" endColumn = "44" fileWritable = "true">
+    <Real start="24.0" fixed="true" useNominal="false" unit="V" />
+  </ScalarVariable>
+
+
+
+  </ModelVariables>
+
+
+</fmiModelDescription>
+

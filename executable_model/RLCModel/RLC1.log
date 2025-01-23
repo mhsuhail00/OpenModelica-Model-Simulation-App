@@ -1,0 +1,26 @@
+C:/Users/mhsuh/AppData/Local/Temp/OpenModelica/OMEdit/RLC1/RLC1.exe -port=52721 -logFormat=xmltcp -override=startTime=0,stopTime=1,stepSize=0.002,tolerance=1e-06,solver=dassl,outputFormat=mat,variableFilter=.* -r=C:/Users/mhsuh/AppData/Local/Temp/OpenModelica/OMEdit/RLC1/RLC1_res.mat -w -lv=LOG_STDOUT,LOG_ASSERT,LOG_STATS -inputPath=C:/Users/mhsuh/AppData/Local/Temp/OpenModelica/OMEdit/RLC1 -outputPath=C:/Users/mhsuh/AppData/Local/Temp/OpenModelica/OMEdit/RLC1
+The initialization finished successfully without homotopy method.
+### STATISTICS ###
+timer
+   0.0092816s          reading init.xml
+   0.0022806s          reading info.xml
+   0.0058857s [ 15.3%] pre-initialization
+   0.0037576s [  9.7%] initialization
+    2.98e-05s [  0.1%] steps
+   0.0032154s [  8.3%] solver (excl. callbacks)
+   0.0035847s [  9.3%] creating output-file
+    5.41e-05s [  0.1%] event-handling
+    0.000524s [  1.4%] overhead
+   0.0214883s [ 55.8%] simulation
+   0.0385396s [100.0%] total
+events
+    0 state events
+    0 time events
+solver: dassl
+  270 steps taken
+  280 calls of functionODE
+   17 evaluations of jacobian
+    0 error test failures
+    0 convergence test failures
+2.3e-05s time of jacobian evaluation
+The simulation finished successfully.

@@ -1,0 +1,8 @@
+# Virtual environment
+.venv/
+
+# IDE settings
+.idea/
+
+# Temp files
+__pycache__/

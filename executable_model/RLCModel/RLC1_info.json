@@ -1,0 +1,29 @@
+{"format":"Transformational debugger info","version":1,
+"info":{"name":"RLC1","description":"A resistor-inductor-capacitor circuit model"},
+"variables":{
+"V":{"comment":"","kind":"state","type":"Real","unit":"V","displayUnit":"","source":{"info":{"file":"Electrical","lineStart":11,"lineEnd":11,"colStart":3,"colEnd":12}}},
+"i_L":{"comment":"","kind":"state","type":"Real","unit":"A","displayUnit":"","source":{"info":{"file":"Electrical","lineStart":12,"lineEnd":12,"colStart":3,"colEnd":14}}},
+"der(V)":{"comment":"","kind":"derivative","type":"Real","unit":"km2.s-4.A-1.g","displayUnit":"","source":{"info":{"file":"Electrical","lineStart":11,"lineEnd":11,"colStart":3,"colEnd":12}}},
+"der(i_L)":{"comment":"","kind":"derivative","type":"Real","unit":"s-1.A","displayUnit":"","source":{"info":{"file":"Electrical","lineStart":12,"lineEnd":12,"colStart":3,"colEnd":14}}},
+"i_C":{"comment":"","kind":"variable","type":"Real","unit":"A","displayUnit":"","source":{"info":{"file":"Electrical","lineStart":14,"lineEnd":14,"colStart":3,"colEnd":14}}},
+"i_R":{"comment":"","kind":"variable","type":"Real","unit":"A","displayUnit":"","source":{"info":{"file":"Electrical","lineStart":13,"lineEnd":13,"colStart":3,"colEnd":14}}},
+"C":{"comment":"","kind":"parameter","type":"Real","unit":"F","displayUnit":"","source":{"info":{"file":"Electrical","lineStart":10,"lineEnd":10,"colStart":3,"colEnd":33}}},
+"L":{"comment":"","kind":"parameter","type":"Real","unit":"H","displayUnit":"","source":{"info":{"file":"Electrical","lineStart":8,"lineEnd":8,"colStart":3,"colEnd":29}}},
+"R":{"comment":"","kind":"parameter","type":"Real","unit":"Ohm","displayUnit":"","source":{"info":{"file":"Electrical","lineStart":9,"lineEnd":9,"colStart":3,"colEnd":31}}},
+"Vb":{"comment":"Battery voltage","kind":"parameter","type":"Real","unit":"V","displayUnit":"","source":{"info":{"file":"Electrical","lineStart":7,"lineEnd":7,"colStart":3,"colEnd":44}}}
+},
+"equations":[{"eqIndex":0,"tag":"dummy"},
+{"eqIndex":1,"section":"initial","tag":"assign","defines":["i_L"],"uses":["$START.i_L"],"equation":["$START.i_L"],"source":{"info":{"file":"","lineStart":0,"lineEnd":0,"colStart":0,"colEnd":0}}},
+{"eqIndex":2,"section":"initial","tag":"assign","defines":["V"],"uses":["$START.V"],"equation":["$START.V"],"source":{"info":{"file":"","lineStart":0,"lineEnd":0,"colStart":0,"colEnd":0}}},
+{"eqIndex":3,"tag":"alias","equation":[7],"section":"initial"},
+{"eqIndex":4,"tag":"alias","equation":[8],"section":"initial"},
+{"eqIndex":5,"tag":"alias","equation":[9],"section":"initial"},
+{"eqIndex":6,"tag":"alias","equation":[10],"section":"initial"},
+{"eqIndex":7,"section":"regular","tag":"assign","defines":["der(i_L)"],"uses":["V","Vb","L"],"equation":["(Vb - V) / L"],"source":{"info":{"file":"Electrical","lineStart":18,"lineEnd":18,"colStart":3,"colEnd":22}}},
+{"eqIndex":8,"section":"regular","tag":"assign","defines":["i_R"],"uses":["R","V"],"equation":["V / R"],"source":{"info":{"file":"Electrical","lineStart":16,"lineEnd":16,"colStart":3,"colEnd":12}}},
+{"eqIndex":9,"section":"regular","tag":"assign","defines":["i_C"],"uses":["i_R","i_L"],"equation":["i_L - i_R"],"source":{"info":{"file":"Electrical","lineStart":19,"lineEnd":19,"colStart":3,"colEnd":14}}},
+{"eqIndex":10,"section":"regular","tag":"assign","defines":["der(V)"],"uses":["C","i_C"],"equation":["i_C / C"],"source":{"info":{"file":"Electrical","lineStart":17,"lineEnd":17,"colStart":3,"colEnd":17}}}
+],
+"functions":[
+]
+}

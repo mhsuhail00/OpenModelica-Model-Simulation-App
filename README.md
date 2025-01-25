@@ -11,7 +11,7 @@ This repository contains a **Desktop Application** built with **PyQt6** to **Exe
 ## **Table of Contents**
 - [Features](#features)
 - [Installation and Execution Guide](#installation-and-execution-guide)
-- [Demo](#demo---application-in-action)
+- [Demo](#-demo-application-in-action)
 - [Usage Instructions](#usage-instructions)
 - [License](#license)
 - [Contact](#contact)

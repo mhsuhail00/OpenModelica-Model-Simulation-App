@@ -5,7 +5,7 @@ This repository contains a **Desktop Application** built with **PyQt6** to **Exe
 ![PyQt6](https://img.shields.io/badge/GUI-PyQt6-green?style=for-the-badge&logo=qt)
 ![Matplotlib](https://img.shields.io/badge/Visualization-Matplotlib-yellow?style=for-the-badge)
 ![License](https://img.shields.io/github/license/mhsuhail00/OpenModelica-Model-Simulation-App?style=for-the-badge)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/mhsuhail00/your-repository?style=for-the-badge)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/mhsuhail00/OpenModelica-Model-Simulation-App?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/Platform-Windows%2010/11-lightgrey?style=for-the-badge)
 
 ## **Table of Contents**

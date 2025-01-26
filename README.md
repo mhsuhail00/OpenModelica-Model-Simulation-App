@@ -13,6 +13,7 @@ This repository contains a **Desktop Application** built with **PyQt6** to **Exe
 - [Installation and Execution Guide](#installation-and-execution-guide)
 - [Demo](#-demo-application-in-action)
 - [Usage Instructions](#usage-instructions)
+- [Build the Executable](#️build-the-executable)
 - [License](#license)
 - [Contact](#contact)
 
@@ -120,7 +121,29 @@ Follow these steps to set up the project, run it locally, and export a standalon
 - Click the variable buttons to generate dynamic plots.
 - Analyze the simulation data interactively.
 ---
+## 🛠️ **Build the Executable**
 
+### 1️⃣ **Navigate to the App Directory**
+- Make sure you are in the application directory where `main.py` is located:
+  ```bash
+   cd OpenModelica-Model-Simulation-App/app
+
+### 2️⃣ **Install cx_Freeze**
+- Install the `cx_Freeze` library to enable executable creation:
+  ```bash
+  pip install cx-Freeze
+
+### 3️⃣ **Build the Executable**
+- Run the following command to build your `.exe` file:
+  ```bash
+  python setup.py build
+
+### 4️⃣ **Locate the Executable**
+- After the build process completes, the `.exe` file will be located in:
+  ```bash
+  build/exe.<platform>/
+
+---
 ## **License**
 This project is licensed under the [MIT License](LICENSE).
 

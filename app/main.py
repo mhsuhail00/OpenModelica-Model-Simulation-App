@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication
+import PyQt6.QtWidgets
 from ui import SimulationApp
 
 def main():
@@ -8,7 +8,7 @@ def main():
 
     """
     # Create an instance of QApplication
-    app = QApplication(sys.argv)
+    app = PyQt6.QtWidgets.QApplication(sys.argv)
     # Create Main Application Window
     window = SimulationApp()
     window.show()

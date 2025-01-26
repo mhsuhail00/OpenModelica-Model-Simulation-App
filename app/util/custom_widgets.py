@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import QPushButton, QLineEdit, QLabel
 
 # Customized Input Box Class
 class CustomInputBox(QLineEdit):
-    def __init__(self, parent=None):
+    def __init__(self, parent = None):
         super().__init__(parent)
         # Set PlaceHolder text and Set Start and Stop time Validators
         self.setPlaceholderText("Enter a Positive Integer")
@@ -30,7 +30,7 @@ class CustomInputBox(QLineEdit):
 
 # Custom Label class
 class CustomLabel(QLabel):
-    def __init__(self, parent=None):
+    def __init__(self, parent = None):
         super().__init__(parent)
         # Style for Label
         self.setStyleSheet(
@@ -46,7 +46,7 @@ class CustomLabel(QLabel):
 
 # Customised Button Class with Icon
 class CustomButton(QPushButton):
-    def __init__(self, text, default_icon_path, hover_icon_path, parent=None):
+    def __init__(self, text, default_icon_path, hover_icon_path, parent = None):
         """
             Initializes the CustomButton with text, default and hover icons.
             :param text: Text to display on the button.

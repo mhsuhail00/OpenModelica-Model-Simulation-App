@@ -13,7 +13,7 @@ This repository contains a **Desktop Application** built with **PyQt6** to **Exe
 - [Installation and Execution Guide](#installation-and-execution-guide)
 - [Demo](#-demo-application-in-action)
 - [Usage Instructions](#usage-instructions)
-- [Build the Executable](#️build-the-executable)
+- [Build the Executable](#️-build-the-executable)
 - [License](#license)
 - [Contact](#contact)
 
